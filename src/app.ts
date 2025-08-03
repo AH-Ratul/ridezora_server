@@ -2,9 +2,20 @@ import express, { Request, Response } from "express";
 import { appRoute } from "./app/route";
 import { globalErrorHandler } from "./app/middlewares/globalErrorHandler";
 import notFound from "./app/middlewares/notFound";
+import passport from "passport";
+import expressSession from "express-session";
+import { env } from "./app/config/env";
+import './app/config/passport'; 
 
 const app = express();
 
+app.use(expressSession({
+    secret: env.EXPRESS_SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}))
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json());
 
 app.use("/api/v1", appRoute);
