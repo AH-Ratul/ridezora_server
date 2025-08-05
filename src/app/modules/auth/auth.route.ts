@@ -2,10 +2,19 @@ import { NextFunction, Request, Response, Router } from "express";
 import { AuthController } from "./auth.controller";
 import passport from "passport";
 import { User } from "../user/user.model";
+import { checkAuth } from "../../middlewares/checkAuth";
+import { Role } from "../user/user.interface";
 
 export const authRoute = Router();
 
 authRoute.post("/login", AuthController.credentialsLogin);
+authRoute.post("/refresh-token", AuthController.getNewAccessToken);
+authRoute.post("/logout", AuthController.logout);
+authRoute.post(
+  "/reset-password",
+  checkAuth(...Object.values(Role)),
+  AuthController.resetPassword
+);
 
 authRoute.get("/google", (req: Request, res: Response, next: NextFunction) => {
   const redirect = req.query.redirect || "/";
