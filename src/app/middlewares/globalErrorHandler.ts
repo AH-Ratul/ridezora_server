@@ -1,7 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import { env } from "../config/env";
+import { handleDuplicateError } from "../errorHelpers/helpers/handleDuplicateError";
+import AppError from "../errorHelpers/AppError";
 
-export const globalErrorHandler = (
+export const globalErrorHandler: ErrorRequestHandler = (
   err: any,
   req: Request,
   res: Response,
@@ -10,7 +12,14 @@ export const globalErrorHandler = (
   let statusCode = err.statusCode || 500;
   let message = err.message || "Internal Server Error";
 
-  if (err instanceof Error) {
+  if (err.code === 11000) {
+    const simplifiedError = handleDuplicateError(err);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+  } else if (err instanceof AppError) {
+    statusCode = err?.statusCode;
+    message = err?.message;
+  } else if (err instanceof Error) {
     statusCode = 500;
     message = err?.message;
   }

@@ -1,5 +1,16 @@
 import { model, Schema } from "mongoose";
-import { IsActive, IUser, Role } from "./user.interface";
+import { IAuthProvider, IsActive, IUser, Role } from "./user.interface";
+
+const authProviderSchema = new Schema<IAuthProvider>(
+  {
+    provider: { type: String, required: true },
+    providerId: { type: String, required: true },
+  },
+  {
+    versionKey: false,
+    _id: false,
+  }
+);
 
 const userSchema = new Schema<IUser>(
   {
@@ -14,7 +25,6 @@ const userSchema = new Schema<IUser>(
     },
     phone: {
       type: String,
-      required: true,
       min: 11,
     },
     password: {
@@ -39,6 +49,7 @@ const userSchema = new Schema<IUser>(
       type: Boolean,
       default: false,
     },
+    auths: [authProviderSchema],
 
     // rider only
     defaultLocation: String,
