@@ -28,6 +28,15 @@ export const createUserZodSchema = z.object({
         "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
     })
     .optional(),
+  role: z.string().optional(),
+  vehicleInfo: z
+    .object({
+      model: z.string().optional(),
+      licensePlate: z.string().optional(),
+      type: z.string().optional(),
+      color: z.string().optional(),
+    })
+    .optional(),
 });
 
 export const updateUserZodSchema = z.object({
@@ -56,19 +65,20 @@ export const updateUserZodSchema = z.object({
         "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
     })
     .optional(),
-  role: z
-    .enum(Object.values(Role) as [string])
-    .optional(),
+  role: z.enum(Object.values(Role) as [string]).optional(),
   isActive: z.enum(Object.values(IsActive) as [string]).optional(),
   isDeleted: z.boolean({ error: "isDeleted must be true or false" }).optional(),
   isVerified: z
     .boolean({ error: "isVerified must be true or false" })
     .optional(),
-  defaultLocation: z.string().optional(),
-  paymentMethod: z.string().optional(),
-  isAvailabe: z.boolean().optional(),
-  currentLocation: z.string().optional(),
-  totalRided: z.number().optional(),
-  licenseNumber: z.string().optional(),
-  approved: z.boolean().optional(),
+  isOnline: z.boolean().optional(),
+  isApproved: z.boolean().optional(),
+  vehicleInfo: z
+    .object({
+      model: z.string().optional(),
+      licensePlate: z.string().optional(),
+      type: z.string().optional(),
+      color: z.string().optional(),
+    })
+    .optional(),
 });

@@ -6,5 +6,5 @@ export interface TErrorSources {
 export interface TGenericErrorResponse {
   statusCode: number;
   message: string;
-  errorSources?: TErrorSources;
+  errorSources?: TErrorSources[];
 }

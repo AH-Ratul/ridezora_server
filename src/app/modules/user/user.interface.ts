@@ -1,8 +1,13 @@
-import { Types } from "mongoose";
-
 export interface IAuthProvider {
   provider: "google" | "credentials";
   providerId: string;
+}
+
+export interface IVehicle {
+  model?: string;
+  licensePlate?: string;
+  type?: string;
+  color: string;
 }
 
 export enum Role {
@@ -16,7 +21,7 @@ export enum IsActive {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
   BLOCKED = "BLOCKED",
-  SUSPENDED = "SUSPENDED"
+  SUSPENDED = "SUSPENDED",
 }
 
 export interface IUser {
@@ -25,23 +30,14 @@ export interface IUser {
   email: string;
   phone?: string;
   password?: string;
-  role: Role;
+  role?: Role;
   picture?: string;
   isActive?: IsActive;
   isVerified?: boolean;
   isDeleted?: boolean;
   auths: IAuthProvider[];
 
-  // rider specific
-  defaultLocation?: string;
-  paymentMethod?: string;
-  rideHistory?: Types.ObjectId[];
-
   //driver specific
-  vehicleInfo?: Types.ObjectId;
-  isAvailable?: boolean;
-  currentLocation?: string;
-  totalRides?: number;
-  licenseNumber?: string;
-  approved?: boolean;
+  vehicleInfo?: IVehicle;
+  isApproved?: boolean;
 }
