@@ -12,13 +12,13 @@ import { JwtPayload } from "jsonwebtoken";
 
 const credentialsLogin = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    passport.authenticate("local", async (err: any, user: any, info: any) => {
+    passport.authenticate("local", (err: any, user: any, info: any) => {
       if (err) {
-        throw new AppError(httpStatus.UNAUTHORIZED, err);
+        return next(new AppError(httpStatus.UNAUTHORIZED, err));
       }
 
       if (!user) {
-        throw new AppError(httpStatus.UNAUTHORIZED, info.message);
+        return next(new AppError(httpStatus.UNAUTHORIZED, info.message));
       }
 
       const userTokens = createUserToken(user);
@@ -125,7 +125,7 @@ const goolgeCallbackController = catchAsync(
 
     setAuthCookie(res, tokenInfo);
 
-    res.redirect(`${env.CLIENT_URL}/${redirectTo}`);
+    return res.redirect(`${env.CLIENT_URL}/${redirectTo}`);
   }
 );
 
