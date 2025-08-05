@@ -39,12 +39,12 @@ passport.use(
         );
 
         if (!isPasswordMatch) {
-          done(null, false, { message: "Password does not Match" });
+          return done(null, false, { message: "Password does not Match" });
         }
 
         return done(null, isUserExist as unknown as string);
       } catch (error) {
-        console.log("local", error);
+        //console.log("local", error);
         done(error);
       }
     }
