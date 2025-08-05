@@ -9,6 +9,7 @@ export const seedSuperAdmin = async () => {
 
     if (isSuperAdmin) {
       console.log("Super Admin already Exists!!");
+      return;
     }
 
     const hashedPassword = await bcrypt.hash(
