@@ -24,6 +24,30 @@ async function main() {
   await seedSuperAdmin();
 })();
 
+process.on("SIGTERM", () => {
+  console.log("SIGTERM signal recieved.. shutting down..");
+
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+
+  process.exit(1);
+});
+
+process.on("SIGINT", () => {
+  console.log("SIGINT signal recieved.. shutting down..");
+
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+
+  process.exit(1);
+});
+
 // handling unhandled rejection
 process.on("unhandledRejection", (err) => {
   console.log("Unhandeld Rejection detected.. shutting down..", err);
