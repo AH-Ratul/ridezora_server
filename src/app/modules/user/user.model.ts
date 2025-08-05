@@ -33,7 +33,7 @@ const userSchema = new Schema<IUser>(
     role: {
       type: String,
       enum: Object.values(Role),
-      required: true,
+      default: Role.RIDER,
     },
     picture: String,
     isActive: {
@@ -51,24 +51,14 @@ const userSchema = new Schema<IUser>(
     },
     auths: [authProviderSchema],
 
-    // rider only
-    defaultLocation: String,
-    paymentMethod: String,
-    rideHistory: {
-      type: Schema.Types.ObjectId,
-      ref: "Ride",
-    },
-
     // driver only
     vehicleInfo: {
-      type: Schema.Types.ObjectId,
-      ref: "Vehicle",
+      model: { type: String },
+      licensePlate: { type: String },
+      type: { type: String },
+      color: { type: String },
     },
-    isAvailable: Boolean,
-    currentLocation: String,
-    totalRides: Number,
-    licenseNumber: String,
-    approved: {
+    isApproved: {
       type: Boolean,
       default: false,
     },
