@@ -16,6 +16,7 @@ export enum IsActive {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
   BLOCKED = "BLOCKED",
+  SUSPENDED = "SUSPENDED"
 }
 
 export interface IUser {
