@@ -7,6 +7,8 @@ import { createUserToken } from "../../utils/userTokens";
 import { sendResponse } from "../../utils/sendResponse";
 import { setAuthCookie } from "../../utils/setAuthCookies";
 import { env } from "../../config/env";
+import { AuthService } from "./auth.service";
+import { JwtPayload } from "jsonwebtoken";
 
 const credentialsLogin = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -39,6 +41,72 @@ const credentialsLogin = catchAsync(
   }
 );
 
+const getNewAccessToken = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        "No refresh token recived from cookie"
+      );
+    }
+
+    const tokenInfo = await AuthService.getNewAccessToken(refreshToken);
+
+    setAuthCookie(res, tokenInfo);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "New Access Token Retrieved Successfull",
+      data: tokenInfo,
+    });
+  }
+);
+
+const resetPassword = catchAsync(async (req: Request, res: Response) => {
+  const newPassword = req.body.newPassword;
+  const oldPassword = req.body.oldPassword;
+  const decodedToken = req.user;
+
+  await AuthService.resetPassword(
+    newPassword,
+    oldPassword,
+    decodedToken as JwtPayload
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Password Changed Successfull",
+    data: null,
+  });
+});
+
+const logout = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    res.clearCookie("accessToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+    });
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+    });
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "You are Logged Out",
+      data: null,
+    });
+  }
+);
+
 const goolgeCallbackController = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     let redirectTo = req.query.state ? (req.query.state as string) : "";
@@ -63,5 +131,8 @@ const goolgeCallbackController = catchAsync(
 
 export const AuthController = {
   credentialsLogin,
-  goolgeCallbackController
+  logout,
+  resetPassword,
+  goolgeCallbackController,
+  getNewAccessToken,
 };
