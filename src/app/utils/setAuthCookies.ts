@@ -1,8 +1,8 @@
 import { Response } from "express";
 
 interface AuthTokens {
-  accessToken: string;
-  refreshToken: string;
+  accessToken?: string;
+  refreshToken?: string;
 }
 
 export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
