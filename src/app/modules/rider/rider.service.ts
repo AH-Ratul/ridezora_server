@@ -8,12 +8,6 @@ import httpStatus from "http-status-codes";
 
 //------------------- REQUEST A RIDE ----------------
 const requestARide = async (payload: IRide) => {
-  const isUserExist = await User.findById(payload.rider);
-
-  if (!isUserExist) {
-    throw new AppError(httpStatus.NOT_FOUND, "Rider not Found");
-  }
-
   const existingRide = await Ride.findOne({
     rider: payload.rider,
     status: Status.REQUESTED,
