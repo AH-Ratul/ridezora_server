@@ -34,7 +34,7 @@ const rideSchema = new Schema<IRide>(
     },
     requestedAt: { type: Date, default: Date.now() },
     acceptedAt: Date,
-    pickedUpAt: Date,
+    inTransit: Date,
     completedAt: Date,
     cancelledAt: Date,
     cancelledBy: { type: String },
