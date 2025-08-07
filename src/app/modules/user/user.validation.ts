@@ -1,5 +1,5 @@
 import z from "zod";
-import { IsActive, Role } from "./user.interface";
+import { IsActive, IsAvailable, Role } from "./user.interface";
 
 export const createUserZodSchema = z.object({
   name: z
@@ -73,6 +73,7 @@ export const updateUserZodSchema = z.object({
     .optional(),
   isOnline: z.boolean().optional(),
   isApproved: z.boolean().optional(),
+  availability: z.enum(Object.values(IsAvailable)).optional(),
   vehicleInfo: z
     .object({
       model: z.string().optional(),

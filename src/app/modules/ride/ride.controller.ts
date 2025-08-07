@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
-import { RiderService } from "./rider.service";
+import { RiderService } from "./ride.service";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status-codes";
 import { JwtPayload } from "jsonwebtoken";
@@ -35,7 +35,18 @@ const cancelARide = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const myRides = catchAsync(async (req: Request, res: Response) => {});
+const myRides = catchAsync(async (req: Request, res: Response) => {
+  const decodedToken = req.user;
+
+  const result = await RiderService.myRides(decodedToken as JwtPayload);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Rider's Rides Retrievied Successfully",
+    data: result,
+  });
+});
 
 export const RiderController = {
   requestARide,

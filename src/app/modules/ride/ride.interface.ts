@@ -23,7 +23,7 @@ export interface IRide {
   status?: Status;
   requestedAt?: Date;
   acceptedAt?: Date;
-  pickedUpAt?: Date;
+  inTransit?: Date;
   completedAt?: Date;
   cancelledAt?: Date;
   cancelledBy?: string;

@@ -1,11 +1,12 @@
 import AppError from "../../errorHelpers/AppError";
-import { IAuthProvider, IUser, Role } from "./user.interface";
+import { IAuthProvider, IsAvailable, IUser, Role } from "./user.interface";
 import { User } from "./user.model";
 import httpStatus from "http-status-codes";
 import bcrypt from "bcryptjs";
 import { env } from "../../config/env";
 import { JwtPayload } from "jsonwebtoken";
 
+//-------------------- CREATE USER ------------------
 const createUser = async (payload: Partial<IUser>) => {
   const { email, password, ...rest } = payload;
 
@@ -26,6 +27,11 @@ const createUser = async (payload: Partial<IUser>) => {
     providerId: email as string,
   };
 
+  if (rest.role === Role.DRIVER) {
+    rest.isApproved = false;
+    rest.availability = IsAvailable.ONLINE;
+  }
+
   const user = await User.create({
     email,
     password: hashedPassword,
@@ -36,18 +42,21 @@ const createUser = async (payload: Partial<IUser>) => {
   return user;
 };
 
+//------------------ GET ALL USERS -----------------
 const getAllUsers = async () => {
   const users = await User.find();
 
   return users;
 };
 
+//----------------- GET SINGLE USER -----------------
 const getSingleUser = async (userId: string) => {
   const user = await User.findById(userId);
 
   return { data: user };
 };
 
+//------------------ UPDATE USER ----------------------
 const updateUser = async (
   userId: string,
   payload: Partial<IUser>,
@@ -82,7 +91,7 @@ const updateUser = async (
     payload.isActive ||
     payload.isDeleted ||
     payload.isVerified ||
-    payload.approved
+    payload.isApproved
   ) {
     // block RIDER & DRIVER from change user status
     if (

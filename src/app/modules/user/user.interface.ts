@@ -24,6 +24,11 @@ export enum IsActive {
   SUSPENDED = "SUSPENDED",
 }
 
+export enum IsAvailable {
+  ONLINE = "ONLINE",
+  OFFLINE = "OFFLINE",
+}
+
 export interface IUser {
   _id?: string;
   name: string;
@@ -40,4 +45,5 @@ export interface IUser {
   //driver specific
   vehicleInfo?: IVehicle;
   isApproved?: boolean;
+  availability?: IsAvailable;
 }

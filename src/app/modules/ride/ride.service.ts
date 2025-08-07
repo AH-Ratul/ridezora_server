@@ -1,7 +1,7 @@
 import { JwtPayload } from "jsonwebtoken";
 import AppError from "../../errorHelpers/AppError";
-import { IRide, Status } from "../ride/ride.interface";
-import { Ride } from "../ride/ride.model";
+import { IRide, Status } from "./ride.interface";
+import { Ride } from "./ride.model";
 import { IsActive } from "../user/user.interface";
 import { User } from "../user/user.model";
 import httpStatus from "http-status-codes";
@@ -59,7 +59,17 @@ const cancelARide = async (rideId: string, decodedToken: JwtPayload) => {
   return cancelRide;
 };
 
-const myRides = async (userId: string) => {};
+const myRides = async (decodedToken: JwtPayload) => {
+  const riderId = decodedToken.userId;
+
+  const rides = await Ride.find({ rider: riderId });
+
+  if (!rides) {
+    throw new AppError(httpStatus.NOT_FOUND, "No Ride Found");
+  }
+
+  return rides;
+};
 
 export const RiderService = {
   requestARide,
