@@ -3,6 +3,7 @@ import { userRoute } from "../modules/user/user.route";
 import { authRoute } from "../modules/auth/auth.route";
 import { rideRoute } from "../modules/ride/ride.route";
 import { adminRoute } from "../modules/admin/admin.route";
+import { driverRoute } from "../modules/driver/driver.route";
 
 export const appRoute = Router();
 
@@ -18,6 +19,10 @@ const moduleRoutes = [
   {
     path: "/rides",
     route: rideRoute,
+  },
+  {
+    path: "/drivers",
+    route: driverRoute,
   },
   {
     path: "/admin",
