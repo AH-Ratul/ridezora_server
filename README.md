@@ -16,7 +16,6 @@ RideZora is a secure, scalable, role-based backend API for a ride-booking servic
   * [Install](#install)
   * [Environment variables](#environment-variables)
   * [Run](#run)
-  * [Seeding / creating initial admin](#seeding--creating-initial-admin)
 * [Authentication & Authorization](#authentication--authorization)
 * [API endpoints summary](#api-endpoints-summary)
 
@@ -26,8 +25,6 @@ RideZora is a secure, scalable, role-based backend API for a ride-booking servic
   * [Admin (Admin only)](#admin-admin-only)
 * [Error handling & responses](#error-handling--responses)
 * [Data & modeling notes](#data--modeling-notes)
-* [Next steps / suggestions](#next-steps--suggestions)
-* [License](#license)
 
 ---
 
