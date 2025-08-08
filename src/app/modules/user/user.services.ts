@@ -1,5 +1,11 @@
 import AppError from "../../errorHelpers/AppError";
-import { IAuthProvider, IsAvailable, IUser, Role } from "./user.interface";
+import {
+  IAuthProvider,
+  IsActive,
+  IsAvailable,
+  IUser,
+  Role,
+} from "./user.interface";
 import { User } from "./user.model";
 import httpStatus from "http-status-codes";
 import bcrypt from "bcryptjs";
@@ -40,13 +46,6 @@ const createUser = async (payload: Partial<IUser>) => {
   });
 
   return user;
-};
-
-//------------------ GET ALL USERS -----------------
-const getAllUsers = async () => {
-  const users = await User.find();
-
-  return users;
 };
 
 //----------------- GET SINGLE USER -----------------
@@ -116,7 +115,6 @@ const updateUser = async (
 
 export const UserService = {
   createUser,
-  getAllUsers,
   getSingleUser,
   updateUser,
 };
