@@ -1,7 +1,6 @@
 import AppError from "../../errorHelpers/AppError";
 import {
   IAuthProvider,
-  IsActive,
   IsAvailable,
   IUser,
   Role,
