@@ -12,17 +12,13 @@ userRoute.post(
   validateRequest(createUserZodSchema),
   UserController.createUser
 );
-userRoute.get(
-  "/all-users",
-  checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
-  UserController.getAllUsers
-);
 
 userRoute.get(
   "/:id",
   checkAuth(...Object.values(Role)),
   UserController.getSingleUser
 );
+
 userRoute.patch(
   "/:id",
   validateRequest(updateUserZodSchema),
