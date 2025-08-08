@@ -1,6 +1,5 @@
 # RideZora — Ride Booking Backend API
 
-**Project overview**
 RideZora is a secure, scalable, role-based backend API for a ride-booking service. Built with **Express.js**, **TypeScript**, **Mongoose (MongoDB)** and **JWT**, this API supports three roles — **admin**, **rider**, and **driver** — and implements full ride lifecycle management, driver workflows, and admin controls.
 
 ---
