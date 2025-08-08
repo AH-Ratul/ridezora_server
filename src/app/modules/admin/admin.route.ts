@@ -18,19 +18,19 @@ adminRoute.get(
 );
 
 adminRoute.get(
-  "/rides",
+  "/all-rides",
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
   AdminController.getAllRides
 );
 
 adminRoute.patch(
-  "/driver-approved/:id",
+  "/approved/:id",
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
   AdminController.approveADriver
 );
 
 adminRoute.patch(
-  "/driver-suspend/:id",
+  "/suspend/:id",
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
   AdminController.suspendADriver
 );
